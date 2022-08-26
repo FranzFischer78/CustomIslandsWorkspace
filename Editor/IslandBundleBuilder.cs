@@ -2,6 +2,8 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 
 //ASSET BUNDLE FOR CUSTOM ISLANDS BY FRANZFISCHER
@@ -30,6 +32,11 @@ public class BuildIslandBundleWindow : EditorWindow
 				Debug.LogError("FAILED TO BUILD BUNDLE. No Scene selected!");
 				return;
 			}
+			if(SceneManager.GetSceneByName(sceneSelector.name).GetRootGameObjects().Count() > 1)
+			{
+				Debug.LogError("FAILED TO BUILD BUNDLE. Too many root objects! Count= "+ SceneManager.GetSceneByName(sceneSelector.name).GetRootGameObjects().Count());
+				return;
+			}
 
 			Debug.Log("Building bundle from " + AssetDatabase.GetAssetOrScenePath(sceneSelector));
 			AssetImporter assetImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetOrScenePath(sceneSelector));
@@ -45,7 +52,17 @@ public class BuildIslandBundleWindow : EditorWindow
 			}
 			try
 			{
-				BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.StrictMode, BuildTarget.StandaloneWindows);
+				AssetBundleBuild[] buildMap = new AssetBundleBuild[1];
+
+				buildMap[0].assetBundleName = sceneSelector.name;
+
+				string[] sceneAssets = new string[1];
+				sceneAssets[0] = AssetImporter.GetAtPath(AssetDatabase.GetAssetOrScenePath(sceneSelector)).assetPath;
+
+				buildMap[0].assetNames = sceneAssets;
+				buildMap[0].assetBundleName = sceneSelector.name + ".assets";
+
+				BuildPipeline.BuildAssetBundles(assetBundleDirectory, buildMap,BuildAssetBundleOptions.StrictMode, BuildTarget.StandaloneWindows);
 				DirectoryInfo d = new DirectoryInfo(assetBundleDirectory);
 				File.Delete("Assets/AssetBundles/AssetBundles");
 				foreach (var file in d.GetFiles("*.manifest"))
