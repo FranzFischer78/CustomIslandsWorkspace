@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d0d034cfa32a6e45ae9d532a39d5f48, type: 3}
+  m_Name: ChunkSpawnerRule
+  m_EditorClassIdentifier: 
+  isFrequencyPoint: 0
+  chunkPointType: 0
+  biomeZoneID: 0
+  biomeZoneRadius: 200
+  spawnsPerChunk:
+    minValue: 0
+    maxValue: 0
+  spawnChance: 0
+  collisionOverlapRadius: 100
+  viewDistance: 400
+  useMinDistance: 1
+  others: 
+  minDistanceToOthers: 0
+  spawnDistanceFromRaft:
+    minValue: 0
+    maxValue: 0
+  spawnAngle:
+    minValue: 0
+    maxValue: 0
+  chunkPointGizmoColor: {r: 1, g: 1, b: 1, a: 1}
